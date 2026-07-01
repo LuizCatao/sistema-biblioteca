@@ -2,115 +2,83 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Leitura Fácil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: #f4f6f9;
-        }
-
-        .sidebar {
-            min-height: 100vh;
-            background: #0f172a;
-            color: white;
-            padding: 20px;
-        }
-
-        .sidebar img {
-            width: 250px;
-            margin-bottom: 1px;
-        }
-
-        .sidebar a {
-            color: #cbd5e1;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 5px;
-        }
-
-        .sidebar a:hover {
-            background: #1e293b;
-            color: white;
-        }
-
-        .content {
-            padding: 25px;
-        }
-
-        .card-dashboard {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
-
-        .section-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
-        }
-
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #64748b;
-            font-size: 14px;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
 
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
 <div class="container-fluid">
     <div class="row">
 
-        <div class="col-md-2 sidebar">
-            <div class="text-center mb-4">
+        <div class="col-md-2 sidebar" id="sidebar">
+            <div class="sidebar-brand">
                 <img src="img/logo.png" alt="Logo">
-                <h4>Leitura Fácil</h4>
                 <small>Sistema de Biblioteca</small>
             </div>
 
-            <a href="#dashboard">Dashboard</a>
-            <a href="#usuarios">Usuários</a>
-            <a href="#livros">Livros</a>
-            <a href="#emprestimos">Empréstimos</a>
-            <a href="historico.php">Histórico</a>
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="active"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+                <a href="#usuarios"><i class="bi bi-people-fill"></i> Usuários</a>
+                <a href="#livros"><i class="bi bi-book-fill"></i> Livros</a>
+                <a href="#emprestimos"><i class="bi bi-arrow-left-right"></i> Empréstimos</a>
+                <a href="historico.php"><i class="bi bi-clock-history"></i> Histórico</a>
+            </nav>
+
+            <div class="sidebar-footer">© 2026 Leitura Fácil</div>
         </div>
 
         <div class="col-md-10 content">
 
+            <div class="topbar">
+                <button class="topbar-toggle" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+                <strong>Leitura Fácil</strong>
+                <span></span>
+            </div>
+
             <section id="dashboard">
-                <h2 class="mb-1">Dashboard</h2>
-                <p class="text-muted">Gerencie usuários, livros e empréstimos da biblioteca.</p>
+                <h2 class="page-title">Dashboard</h2>
+                <p class="page-subtitle">Gerencie usuários, livros e empréstimos da biblioteca.</p>
 
-                <div class="row mb-4">
+                <div class="row mb-4 g-3">
                     <div class="col-md-4">
-                        <div class="card card-dashboard">
-                            <div class="card-body">
-                                <h6 class="text-muted">Usuários cadastrados</h6>
-                                <h2 id="totalUsuarios">0</h2>
+                        <div class="card stat-card">
+                            <div class="card-body d-flex align-items-center gap-3">
+                                <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+                                <div>
+                                    <h6>Usuários cadastrados</h6>
+                                    <h2 id="totalUsuarios">0</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
-                        <div class="card card-dashboard">
-                            <div class="card-body">
-                                <h6 class="text-muted">Livros cadastrados</h6>
-                                <h2 id="totalLivros">0</h2>
+                        <div class="card stat-card stat-books">
+                            <div class="card-body d-flex align-items-center gap-3">
+                                <div class="stat-icon"><i class="bi bi-book-fill"></i></div>
+                                <div>
+                                    <h6>Livros cadastrados</h6>
+                                    <h2 id="totalLivros">0</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-4">
-                        <div class="card card-dashboard">
-                            <div class="card-body">
-                                <h6 class="text-muted">Empréstimos registrados</h6>
-                                <h2 id="totalEmprestimos">0</h2>
+                        <div class="card stat-card stat-loans">
+                            <div class="card-body d-flex align-items-center gap-3">
+                                <div class="stat-icon"><i class="bi bi-arrow-left-right"></i></div>
+                                <div>
+                                    <h6>Empréstimos registrados</h6>
+                                    <h2 id="totalEmprestimos">0</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -118,81 +86,123 @@
             </section>
 
             <section id="usuarios" class="card section-card">
-                <div class="card-header bg-primary text-white">
-                    Cadastro de Usuários
+                <div class="card-header header-usuarios text-white">
+                    <i class="bi bi-person-plus-fill"></i> Cadastro de Usuários
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row g-2">
                         <div class="col-md-4 mb-2">
-                            <input class="form-control" id="nomeUsuario" placeholder="Nome do usuário">
+                            <div class="form-floating">
+                                <input class="form-control" id="nomeUsuario" placeholder="Nome do usuário">
+                                <label for="nomeUsuario">Nome do usuário</label>
+                            </div>
                         </div>
                         <div class="col-md-4 mb-2">
-                            <input class="form-control" id="emailUsuario" placeholder="Email">
+                            <div class="form-floating">
+                                <input class="form-control" id="emailUsuario" placeholder="Email">
+                                <label for="emailUsuario">Email</label>
+                            </div>
                         </div>
                         <div class="col-md-4 mb-2">
-                            <input class="form-control" id="telefoneUsuario" placeholder="Telefone">
+                            <div class="form-floating">
+                                <input class="form-control" id="telefoneUsuario" placeholder="Telefone">
+                                <label for="telefoneUsuario">Telefone</label>
+                            </div>
                         </div>
                     </div>
 
-                    <button class="btn btn-primary mb-3" onclick="cadastrarUsuario()">Cadastrar Usuário</button>
+                    <button class="btn btn-primary mb-3" onclick="cadastrarUsuario()">
+                        <i class="bi bi-plus-lg"></i> Cadastrar Usuário
+                    </button>
 
                 </div>
             </section>
 
             <section id="livros" class="card section-card">
-                <div class="card-header bg-success text-white">
-                    Cadastro de Livros
+                <div class="card-header header-livros text-white">
+                    <i class="bi bi-journal-plus"></i> Cadastro de Livros
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row g-2">
                         <div class="col-md-3 mb-2">
-                            <input class="form-control" id="tituloLivro" placeholder="Título">
+                            <div class="form-floating">
+                                <input class="form-control" id="tituloLivro" placeholder="Título">
+                                <label for="tituloLivro">Título</label>
+                            </div>
                         </div>
                         <div class="col-md-3 mb-2">
-                            <input class="form-control" id="autorLivro" placeholder="Autor">
+                            <div class="form-floating">
+                                <input class="form-control" id="autorLivro" placeholder="Autor">
+                                <label for="autorLivro">Autor</label>
+                            </div>
                         </div>
                         <div class="col-md-3 mb-2">
-                            <input class="form-control" id="categoriaLivro" placeholder="Categoria">
+                            <div class="form-floating">
+                                <input class="form-control" id="categoriaLivro" placeholder="Categoria">
+                                <label for="categoriaLivro">Categoria</label>
+                            </div>
                         </div>
                         <div class="col-md-3 mb-2">
-                            <input class="form-control" id="quantidadeLivro" type="number" placeholder="Quantidade">
+                            <div class="form-floating">
+                                <input class="form-control" id="quantidadeLivro" type="number" placeholder="Quantidade">
+                                <label for="quantidadeLivro">Quantidade</label>
+                            </div>
                         </div>
                     </div>
 
-                    <button class="btn btn-success mb-3" onclick="cadastrarLivro()">Cadastrar Livro</button>
+                    <button class="btn btn-success mb-3" onclick="cadastrarLivro()">
+                        <i class="bi bi-plus-lg"></i> Cadastrar Livro
+                    </button>
 
                 </div>
             </section>
 
             <section id="emprestimos" class="card section-card">
-                <div class="card-header bg-warning">
-                    Registro de Empréstimos
+                <div class="card-header header-emprestimos">
+                    <i class="bi bi-arrow-left-right"></i> Registro de Empréstimos
                 </div>
                 <div class="card-body">
-                    <div class="row">
+                    <div class="row g-2">
                         <div class="col-md-3 mb-2">
-                            <input class="form-control" list="listaUsuarios" id="usuarioEmprestimo" placeholder="Pesquisar usuário">
-                            <datalist id="listaUsuarios"></datalist>
+                            <div class="form-floating">
+                                <input class="form-control" list="listaUsuarios" id="usuarioEmprestimo" placeholder="Pesquisar usuário">
+                                <label for="usuarioEmprestimo">Usuário</label>
+                                <datalist id="listaUsuarios"></datalist>
+                            </div>
                         </div>
                         <div class="col-md-3 mb-2">
-                            <input class="form-control" list="listaLivros" id="livroEmprestimo" placeholder="Pesquisar livro">
-                            <datalist id="listaLivros"></datalist>
+                            <div class="form-floating">
+                                <input class="form-control" list="listaLivros" id="livroEmprestimo" placeholder="Pesquisar livro">
+                                <label for="livroEmprestimo">Livro</label>
+                                <datalist id="listaLivros"></datalist>
+                            </div>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <input class="form-control" id="dataEmprestimo" type="date">
+                            <div class="form-floating">
+                                <input class="form-control" id="dataEmprestimo" type="date">
+                                <label for="dataEmprestimo">Empréstimo</label>
+                            </div>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <input class="form-control" id="dataDevolucao" type="date">
+                            <div class="form-floating">
+                                <input class="form-control" id="dataDevolucao" type="date">
+                                <label for="dataDevolucao">Devolução</label>
+                            </div>
                         </div>
                         <div class="col-md-2 mb-2">
-                            <select class="form-control" id="statusEmprestimo">
-                                <option value="Emprestado">Emprestado</option>
-                                <option value="Devolvido">Devolvido</option>
-                            </select>
+                            <div class="form-floating">
+                                <select class="form-select" id="statusEmprestimo">
+                                    <option value="Emprestado">Emprestado</option>
+                                    <option value="Devolvido">Devolvido</option>
+                                </select>
+                                <label for="statusEmprestimo">Status</label>
+                            </div>
                         </div>
                     </div>
 
-                    <button class="btn btn-warning mb-3" onclick="cadastrarEmprestimo()">Registrar Empréstimo</button>
+                    <button class="btn btn-warning mb-3" onclick="cadastrarEmprestimo()">
+                        <i class="bi bi-plus-lg"></i> Registrar Empréstimo
+                    </button>
 
                 </div>
             </section>
@@ -301,6 +311,11 @@ function cadastrarEmprestimo() {
 carregarUsuarios();
 carregarLivros();
 carregarEmprestimos();
+
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+    document.getElementById("sidebarBackdrop").classList.toggle("show");
+}
 </script>
 
 </body>

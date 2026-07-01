@@ -1,0 +1,369 @@
+/* Leitura Fácil - Sistema de Biblioteca
+   Estilos compartilhados entre todas as telas */
+
+:root {
+    --brand-navy: #0f172a;
+    --brand-navy-light: #1e293b;
+    --brand-blue: #4f7cac;
+    --brand-blue-dark: #3d6390;
+    --brand-green: #2e9e6d;
+    --brand-amber: #d99a1b;
+    --bg-page: #f4f6f9;
+    --text-muted: #64748b;
+    --radius-lg: 18px;
+    --radius-md: 12px;
+    --shadow-soft: 0 4px 16px rgba(15, 23, 42, 0.07);
+    --shadow-hover: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+body {
+    background: var(--bg-page);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #1e293b;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+/* ===== Sidebar ===== */
+
+.sidebar {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--brand-navy) 0%, #17223d 100%);
+    color: white;
+    padding: 24px 18px;
+    position: sticky;
+    top: 0;
+}
+
+.sidebar-brand {
+    text-align: center;
+    padding: 6px 10px 22px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-brand img {
+    width: 140px;
+}
+
+.sidebar-brand small {
+    display: block;
+    color: #94a3b8;
+    margin-top: -6px;
+    padding-bottom: 2px;
+    font-size: 12px;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sidebar-nav a {
+    color: #cbd5e1;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: var(--radius-md);
+    font-size: 15px;
+    font-weight: 500;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sidebar-nav a i {
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar-nav a:hover {
+    background: var(--brand-navy-light);
+    color: white;
+}
+
+.sidebar-nav a.active {
+    background: var(--brand-blue);
+    color: white;
+}
+
+.sidebar-footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 12px;
+    color: #64748b;
+    text-align: center;
+}
+
+/* ===== Topbar (mobile) ===== */
+
+.topbar {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 14px 18px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 16px;
+    border-radius: var(--radius-md);
+}
+
+.topbar-toggle {
+    border: none;
+    background: var(--brand-navy);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+@media (max-width: 767.98px) {
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 1040;
+        width: 260px;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        box-shadow: var(--shadow-hover);
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .sidebar-backdrop {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        z-index: 1030;
+    }
+
+    .sidebar-backdrop.show {
+        display: block;
+    }
+
+    .topbar {
+        display: flex;
+    }
+}
+
+/* ===== Content ===== */
+
+.content {
+    padding: 28px;
+}
+
+.page-title {
+    margin-bottom: 4px;
+}
+
+.page-subtitle {
+    color: var(--text-muted);
+    margin-bottom: 28px;
+}
+
+/* ===== Dashboard stat cards ===== */
+
+.stat-card {
+    border: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    border-left: 4px solid var(--brand-blue);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.stat-card.stat-books { border-left-color: var(--brand-green); }
+.stat-card.stat-loans { border-left-color: var(--brand-amber); }
+
+.stat-card .stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    background: rgba(79, 124, 172, 0.12);
+    color: var(--brand-blue);
+}
+
+.stat-card.stat-books .stat-icon {
+    background: rgba(46, 158, 109, 0.12);
+    color: var(--brand-green);
+}
+
+.stat-card.stat-loans .stat-icon {
+    background: rgba(217, 154, 27, 0.14);
+    color: var(--brand-amber);
+}
+
+.stat-card h6 {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+}
+
+.stat-card h2 {
+    margin-bottom: 0;
+    font-weight: 800;
+}
+
+/* ===== Section cards (forms / tables) ===== */
+
+.section-card {
+    border: none;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+
+.section-card .card-header {
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 16px 22px;
+}
+
+.section-card .card-header i {
+    font-size: 18px;
+}
+
+.section-card .card-body {
+    padding: 22px;
+}
+
+.header-usuarios { background: var(--brand-blue) !important; }
+.header-livros { background: var(--brand-green) !important; }
+.header-emprestimos { background: var(--brand-amber) !important; color: #3a2c05; }
+
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    background: var(--brand-blue);
+    border-color: var(--brand-blue);
+}
+
+.btn-primary:hover {
+    background: var(--brand-blue-dark);
+    border-color: var(--brand-blue-dark);
+}
+
+.btn-success {
+    background: var(--brand-green);
+    border-color: var(--brand-green);
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 1px solid #dde3ea;
+    padding: 10px 14px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 0.2rem rgba(79, 124, 172, 0.15);
+}
+
+.form-floating > label {
+    color: var(--text-muted);
+}
+
+/* ===== Tables (histórico) ===== */
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: var(--brand-navy);
+    color: white;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    border: none;
+    padding: 14px 16px;
+    vertical-align: middle;
+}
+
+.table tbody td {
+    padding: 13px 16px;
+    vertical-align: middle;
+    font-size: 14.5px;
+}
+
+.avatar-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--brand-blue);
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 13px;
+    margin-right: 10px;
+}
+
+.badge-status {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.badge-emprestado {
+    background: rgba(217, 154, 27, 0.15);
+    color: #a56c0b;
+}
+
+.badge-devolvido {
+    background: rgba(46, 158, 109, 0.15);
+    color: #1f6e4c;
+}
+
+.empty-state {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 32px 16px;
+}
+
+.empty-state i {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 8px;
+    opacity: 0.5;
+}
+
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 14px;
+}

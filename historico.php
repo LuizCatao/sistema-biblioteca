@@ -2,103 +2,67 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Histórico - Leitura Fácil</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-
-        body {
-            background: #f4f6f9;
-        }
-
-        .sidebar {
-            min-height: 100vh;
-            background: #0f172a;
-            color: white;
-            padding: 20px;
-        }
-
-        .sidebar img {
-            width: 250px;
-            margin-bottom: 1px;
-        }
-
-        .sidebar a {
-            color: #cbd5e1;
-            text-decoration: none;
-            display: block;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 5px;
-        }
-
-        .sidebar a:hover {
-            background: #1e293b;
-            color: white;
-        }
-
-        .content {
-            padding: 25px;
-        }
-
-        .section-card {
-            border: none;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
-        }
-
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #64748b;
-            font-size: 14px;
-        }
-
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
 
 </head>
 
 <body>
 
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
 <div class="container-fluid">
 
     <div class="row">
 
-        <div class="col-md-2 sidebar">
+        <div class="col-md-2 sidebar" id="sidebar">
 
-            <div class="text-center mb-4">
+            <div class="sidebar-brand">
                 <img src="img/logo.png" alt="Logo">
-                <h4>Leitura Fácil</h4>
                 <small>Sistema de Biblioteca</small>
             </div>
 
-            <a href="index.php">Dashboard</a>
-            <a href="index.php#usuarios">Usuários</a>
-            <a href="index.php#livros">Livros</a>
-            <a href="index.php#emprestimos">Empréstimos</a>
-            <a href="historico.php">Histórico</a>
+            <nav class="sidebar-nav">
+                <a href="index.php"><i class="bi bi-grid-1x2-fill"></i> Dashboard</a>
+                <a href="index.php#usuarios"><i class="bi bi-people-fill"></i> Usuários</a>
+                <a href="index.php#livros"><i class="bi bi-book-fill"></i> Livros</a>
+                <a href="index.php#emprestimos"><i class="bi bi-arrow-left-right"></i> Empréstimos</a>
+                <a href="historico.php" class="active"><i class="bi bi-clock-history"></i> Histórico</a>
+            </nav>
+
+            <div class="sidebar-footer">© 2026 Leitura Fácil</div>
 
         </div>
 
         <div class="col-md-10 content">
 
-            <h2 class="mb-4">Histórico de Registros</h2>
+            <div class="topbar">
+                <button class="topbar-toggle" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+                <strong>Histórico</strong>
+                <span></span>
+            </div>
+
+            <h2 class="page-title">Histórico de Registros</h2>
+            <p class="page-subtitle">Consulte e gerencie tudo que já foi cadastrado.</p>
 
             <!-- USUÁRIOS -->
 
             <section class="card section-card">
 
-                <div class="card-header bg-primary text-white">
-                    Usuários Cadastrados
+                <div class="card-header header-usuarios text-white">
+                    <i class="bi bi-people-fill"></i> Usuários Cadastrados
                 </div>
 
-                <div class="card-body">
+                <div class="card-body p-0">
 
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover mb-0">
 
-                        <thead class="table-dark">
+                        <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
@@ -121,15 +85,15 @@
 
             <section class="card section-card">
 
-                <div class="card-header bg-success text-white">
-                    Livros Cadastrados
+                <div class="card-header header-livros text-white">
+                    <i class="bi bi-book-fill"></i> Livros Cadastrados
                 </div>
 
-                <div class="card-body">
+                <div class="card-body p-0">
 
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover mb-0">
 
-                        <thead class="table-dark">
+                        <thead>
                            <tr>
                                 <th>ID</th>
                                 <th>Título</th>
@@ -153,15 +117,15 @@
 
             <section class="card section-card">
 
-                <div class="card-header bg-warning">
-                    Empréstimos Registrados
+                <div class="card-header header-emprestimos">
+                    <i class="bi bi-arrow-left-right"></i> Empréstimos Registrados
                 </div>
 
-                <div class="card-body">
+                <div class="card-body p-0">
 
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover mb-0">
 
-                        <thead class="table-dark">
+                        <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Usuário</th>
@@ -205,20 +169,34 @@ function carregarUsuarios() {
 
             tabela.innerHTML = "";
 
+            if (data.rows.length === 0) {
+                tabela.innerHTML = `
+                    <tr><td colspan="5">
+                        <div class="empty-state">
+                            <i class="bi bi-people"></i>
+                            Nenhum usuário cadastrado ainda.
+                        </div>
+                    </td></tr>
+                `;
+                return;
+            }
+
             data.rows.forEach(usuario => {
+
+                let inicial = usuario.nome ? usuario.nome.trim().charAt(0).toUpperCase() : "?";
 
                 tabela.innerHTML += `
 
                     <tr>
                         <td>${usuario.id_usuario}</td>
-                        <td>${usuario.nome}</td>
+                        <td><span class="avatar-circle">${inicial}</span>${usuario.nome}</td>
                         <td>${usuario.email}</td>
                         <td>${usuario.telefone}</td>
 
                         <td>
                             <button class="btn btn-danger btn-sm"
                                 onclick="excluirUsuario(${usuario.id_usuario})">
-                                Excluir
+                                <i class="bi bi-trash3"></i> Excluir
                             </button>
                         </td>
                     </tr>
@@ -244,6 +222,18 @@ function carregarLivros() {
 
             tabela.innerHTML = "";
 
+            if (data.rows.length === 0) {
+                tabela.innerHTML = `
+                    <tr><td colspan="6">
+                        <div class="empty-state">
+                            <i class="bi bi-book"></i>
+                            Nenhum livro cadastrado ainda.
+                        </div>
+                    </td></tr>
+                `;
+                return;
+            }
+
             data.rows.forEach(livro => {
 
                 tabela.innerHTML += `
@@ -258,17 +248,17 @@ function carregarLivros() {
 
                             <button class="btn btn-danger btn-sm"
                                 onclick="alterarQuantidade(${livro.id_livro}, ${livro.quantidade - 1})">
-                                -
+                                <i class="bi bi-dash"></i>
                             </button>
 
                             <button class="btn btn-success btn-sm"
                                 onclick="alterarQuantidade(${livro.id_livro}, ${livro.quantidade + 1})">
-                                +
+                                <i class="bi bi-plus"></i>
                             </button>
 
                             <button class="btn btn-dark btn-sm"
                                 onclick="excluirLivro(${livro.id_livro})">
-                                Excluir
+                                <i class="bi bi-trash3"></i> Excluir
                             </button>
 
                         </td>
@@ -295,6 +285,18 @@ function carregarEmprestimos() {
 
             tabela.innerHTML = "";
 
+            if (data.rows.length === 0) {
+                tabela.innerHTML = `
+                    <tr><td colspan="7">
+                        <div class="empty-state">
+                            <i class="bi bi-arrow-left-right"></i>
+                            Nenhum empréstimo registrado ainda.
+                        </div>
+                    </td></tr>
+                `;
+                return;
+            }
+
             data.rows.forEach(emp => {
 
                 let novoStatus = emp.status == "Emprestado"
@@ -309,6 +311,14 @@ function carregarEmprestimos() {
                     ? "btn-success"
                     : "btn-warning";
 
+                let badgeClasse = emp.status == "Emprestado"
+                    ? "badge-emprestado"
+                    : "badge-devolvido";
+
+                let badgeIcone = emp.status == "Emprestado"
+                    ? "bi-hourglass-split"
+                    : "bi-check-circle-fill";
+
                 tabela.innerHTML += `
 
                     <tr>
@@ -317,7 +327,7 @@ function carregarEmprestimos() {
                         <td>${emp.titulo}</td>
                         <td>${emp.data_emprestimo}</td>
                         <td>${emp.data_devolucao}</td>
-                        <td>${emp.status}</td>
+                        <td><span class="badge-status ${badgeClasse}"><i class="bi ${badgeIcone}"></i> ${emp.status}</span></td>
 
                         <td>
                             <button class="btn ${corBotao} btn-sm"
@@ -403,6 +413,11 @@ function alterarStatusEmprestimo(id, status) {
             alert(data.retorno);
             carregarEmprestimos();
         });
+}
+
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+    document.getElementById("sidebarBackdrop").classList.toggle("show");
 }
 
 </script>
